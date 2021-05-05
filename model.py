@@ -102,7 +102,7 @@ class Image(db.Model):
         return data
 
 
-def connect_to_db(flask_app, db_uri='postgresql:///imagerepo', echo=False):
+def connect_to_db(flask_app, db_uri='postgresql:///images', echo=False):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
