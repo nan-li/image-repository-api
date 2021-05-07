@@ -29,7 +29,7 @@ app.config["JWT_SECRET_KEY"] = os.environ['JWT_SECRET_KEY']
 jwt = JWTManager(app)
 
 
-@app.route('/api/users/register', methods=['POST'])
+@app.route('/users/register', methods=['POST'])
 def register_user():
     """Create a new user account."""
     if not request.json:
@@ -50,11 +50,11 @@ def register_user():
     return jsonify({
                 'status': 'success',
                 'message': 'Account successfully created.',
-                'user': username,
+                'username': username,
                 'user_id': user.id
     })
 
-@app.route("/api/users/login", methods=["POST"])
+@app.route("/users/login", methods=["POST"])
 def login():
     """Authenticate the user and return JWT."""
     username = request.json.get('username').lower()
@@ -71,6 +71,7 @@ def login():
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token, "user_id": user.id })
 
+@app.route("/users/logout", methods=["POST"])
 
 @app.route("/protected", methods=["GET"])
 @jwt_required()
