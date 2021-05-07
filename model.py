@@ -35,7 +35,7 @@ class User(db.Model):
     id = db.Column(db.Integer,
                     autoincrement=True, 
                     primary_key=True)
-    username = db.Column(db.String, unique=True)
+    username = db.Column(db.String, unique=True, nullable=False)
     password_hash = db.Column(db.String)
 
     images = db.relationship('Image', 
@@ -82,8 +82,8 @@ class Image(db.Model):
                     primary_key=True)
     title = db.Column(db.String)
     url = db.Column(db.String)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     permission = db.Column(db.Enum(ImagePermission), default='PRIVATE')
     status = db.Column(db.Enum(ImageStatus), default='ACTIVE')
     # trashed_at timestamp resets if trashed image is restored and re-trashed
@@ -101,6 +101,32 @@ class Image(db.Model):
         }
         return data
 
+
+def example_data():
+    """Create some sample data for testing."""
+
+    # In case this is run more than once, empty out existing data
+    User.query.delete()
+    Image.query.delete()
+    Friend.query.delete()
+
+    # Add sample users and images
+    user1 = User(username='user1')
+    user1.set_password('test1')
+    user2 = User(username='user2')
+    user2.set_password('test2')
+
+    user1image1 = Image(url='url/for/user1image1', owner=user1)
+    user2image1 = Image(url='url/for/user2image1', owner=user2)
+    user1image2_private = Image(url='url/for/user1image2_private', 
+                                owner=user1)
+
+    db.session.add_all([user1, 
+                        user2, 
+                        user1image1, 
+                        user2image1, 
+                        user1image2_private])
+    db.session.commit()
 
 def connect_to_db(flask_app, db_uri='postgresql:///images', echo=False):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
