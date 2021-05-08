@@ -2,7 +2,7 @@
 
 #TODO: Remove unecesary items below
 
-from flask import (Flask, redirect, abort,
+from flask import (Flask, redirect,
                     request, session, jsonify, request)
 
 from model import connect_to_db, User
@@ -33,16 +33,23 @@ jwt = JWTManager(app)
 def register_user():
     """Create a new user account."""
     if not request.json:
-        abort(400, description='Invalid request.')
+        return jsonify({
+            'status': 'fail',
+            "message": 'Invalid request.'}), 400
+
     username = request.json.get('username').lower()
     password = request.json.get("password")
 
     if not username or not password:
-        abort(400, description='Missing username and/or password.')
+        return jsonify({
+            'status': 'fail',
+            "message": 'Missing username and/or password.'}), 400
 
     # Check if user with that username already exists
     if crud.get_user_by_username(username):
-        abort(400, description='Username already exists.')
+        return jsonify({
+            'status': 'fail',
+            "message": 'Username already exists.'}), 400
 
     # OK to create a new user account
     user = crud.create_user(username, password)

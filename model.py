@@ -36,7 +36,7 @@ class User(db.Model):
                     autoincrement=True, 
                     primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
-    password_hash = db.Column(db.String)
+    password_hash = db.Column(db.String, nullable=False)
 
     images = db.relationship('Image', 
                     foreign_keys='Image.owner_id',
@@ -111,10 +111,8 @@ def example_data():
     Friend.query.delete()
 
     # Add sample users and images
-    user1 = User(username='user1')
-    user1.set_password('test1')
-    user2 = User(username='user2')
-    user2.set_password('test2')
+    user1 = User(username='user1', password_hash=generate_password_hash('test1'))
+    user2 = User(username='user2', password_hash=generate_password_hash('test2'))
 
     user1image1 = Image(url='url/for/user1image1', owner=user1)
     user2image1 = Image(url='url/for/user2image1', owner=user2)

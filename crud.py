@@ -2,17 +2,13 @@
 
 from model import db, User, Image
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash
 
 def create_user(username, password):
     """Create and return a new user."""
 
-    # When I create a new user, I don't pass password in:
-    user = User(username=username)
-    
-    # Here I set the password_hash with password
-    user.set_password(password)
-    
+    user = User(username=username, password_hash=generate_password_hash(password))
+        
     db.session.add(user)
     db.session.commit()
     return user
