@@ -19,6 +19,11 @@ $ pip3 install flask-jwt-extended
 How to Run:
 - source secrets.sh
 
-How to Make Requests with Postman
-- /api/users/register
+
+| Route | Description |
+| --- | --- |
+| `/users/register` | curl -d '{"username":"nan3", "password":"test"}' -H 'Content-Type: application/json' http://0.0.0.0:5000/users/register |
+| `/users/login` | TBD |
+
+
 
