@@ -22,7 +22,15 @@ How to Run:
 
 | Route | Description |
 | --- | --- |
-| `/users/register` | Register a new account by supplying your desired username and password <br/><br/>curl -d '{"username":"YOUR_USERNAME", "password":"YOUR_PASSWORD"}' -H 'Content-Type: application/json' http://0.0.0.0:5000/users/register |
+| `/users/register` | Register a new account by supplying your desired username and password <br/><br/>curl -d '{"username":"YOUR_USERNAME", "password":"YOUR_PASSWORD"}' -H 'Content-Type: application/json' http://0.0.0.0:5000/users/register <br/><br>
+```
+{
+  "message": "Account successfully created.", 
+  "status": "success", 
+  "user_id": YOUR_USER_ID, 
+  "username": YOUR_USERNAME
+}
+```|
 | `/users/login` | TBD |
 
 
