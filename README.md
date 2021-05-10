@@ -19,7 +19,7 @@ This backend-focused project stores images hosted in Cloudinary and uses JSON We
 * [/users/register](#register)
 * [/users/login](#login)
 * [/users/<YOUR_USERNAME>/upload](#upload)
-* [/users/<USERNAME>/images](#get_user_images)
+* [/users/<USERNAME_HERE>/images](#get_user_images)
 
 
 ## Routes Details
