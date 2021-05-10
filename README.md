@@ -89,7 +89,7 @@ http://54.80.94.139/users/login
 The token returned from this route long and can be tedious to include in subsequent requests. One suggestion is to store the token in the shell environment.
 
 
-### <a name="upload"/>`/users/{YOUR_USERNAME}upload`
+### <a name="upload"/>`/users/{YOUR_USERNAME}/upload`
 Upload an image file by supplying the path to the file. Include your token in the request and supply your username in the route.
 
 **Making a request:**
