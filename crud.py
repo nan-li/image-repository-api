@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Image
+from model import db, User, Image, ImagePermission
 from datetime import datetime
 from werkzeug.security import generate_password_hash
 
@@ -26,6 +26,30 @@ def get_user_by_username_and_password(username, password):
     if user.check_password(password):
         return user
 
-"""Send a friend request from sender to recipient."""
 
-"""Accept a friend request."""
+def create_image(image_url, owner, permission="PRIVATE"):
+    """Create and return a new image."""
+
+    image = Image(image_url=image_url,
+                    owner=owner,
+                    permission=permission)
+        
+    db.session.add(image)
+    db.session.commit()
+    return image
+
+
+def get_all_images_for_user(username):
+    """Return all images belonging to a user."""
+
+    user = get_user_by_username(username)
+    return user.images
+
+
+def get_public_images_for_user(username):
+    """Return all public images belonging to a user."""
+
+    user = get_user_by_username(username)
+    images = user.images
+    public_images = [img for img in images if img.permission.value == "PUBLIC"]
+    return public_images
