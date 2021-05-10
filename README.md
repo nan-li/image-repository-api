@@ -30,7 +30,7 @@ Making a request:
 
 ```sh
 curl \
--d '{"username":"<YOUR_USERNAME>", "password":"<YOUR_PASSWORD>"}' \
+-d '{"username":"{YOUR_USERNAME}", "password":"{YOUR_PASSWORD}"}' \
 -H 'Content-Type: application/json' \
 http://0.0.0.0:5000/users/register
 ```
@@ -52,7 +52,7 @@ Making a request:
 
 ```sh
 curl \
--d '{"username":"<YOUR_USERNAME>", "password":"<YOUR_PASSWORD>"}' \
+-d '{"username":"{YOUR_USERNAME}", "password":"{YOUR_PASSWORD}"}' \
 -H 'Content-Type: application/json' \
 http://0.0.0.0:5000/users/login
 ```
@@ -61,53 +61,53 @@ Successful response:
 
 ```json
 {
-  "token": "<YOUR_TOKEN_HERE_AND_BE_SURE_TO_SAVE_IT>", 
-  "user_id": "<YOUR_USER_ID>"
+  "token": "{YOUR_TOKEN_HERE_AND_BE_SURE_TO_SAVE_IT}", 
+  "user_id": "{YOUR_USER_ID}"
 } 
 ```
 
 The token returned from this route long and can be tedious to include in subsequent requests.
 
 
-### <a name="upload"/>`/users/<YOUR_USERNAME>/upload`
+### <a name="upload"/>`/users/{YOUR_USERNAME}upload`
 Making a request:
 
 ```sh
 curl \
--F "image=@<PATH/TO/IMAGE.PNG>" \
--H "Authorization: Bearer <YOUR_TOKEN>" \
-http://0.0.0.0:5000/users/<YOUR_USERNAME>/upload
+-F "image=@{PATH/TO/IMAGE.PNG}" \
+-H "Authorization: Bearer {YOUR_TOKEN}" \
+http://0.0.0.0:5000/users/{YOUR_USERNAME}/upload
 ```
 
 By default, the default permission on uploaded photos is set to PRIVATE. Set the permission of photo on upload to PUBLIC by adding `'-F permission=PUBLIC'`.
 
 ```sh
 curl \
--F "image=@<PATH/TO/IMAGE.PNG>" \
--F permission=PUBLIC -H "Authorization: Bearer <YOUR_TOKEN>"  \
-http://0.0.0.0:5000/users/<YOUR_USERNAME>/upload
+-F "image=@{PATH/TO/IMAGE.PNG}" \
+-F permission=PUBLIC -H "Authorization: Bearer {YOUR_TOKEN}"  \
+http://0.0.0.0:5000/users/{YOUR_USERNAME}/upload
 ```
 
 Successful response:
 
 ```json
 {
-  "image_url": "<HTTP_URL_FOR_IMAGE>", 
+  "image_url": "{HTTP_URL_FOR_IMAGE}", 
   "message": "Image successfully uploaded.", 
-  "permission": "<PRIVATE_OR_PUBLIC>", 
+  "permission": "{PRIVATE_OR_PUBLIC}", 
   "status": "success"
 }
 ```
 
-### <a name="get_user_images"/>`/users/<USERNAME>/images`
+### <a name="get_user_images"/>`/users/{USERNAME}/images`
 Get all images if you are requesting own images. Get public images of another user.
 
 Making a request:
 
 ```sh
 curl \
--H "Authorization: Bearer <YOUR_TOKEN>" \
-http://0.0.0.0:5000/users/<USERNAME>/images
+-H "Authorization: Bearer {YOUR_TOKEN}" \
+http://0.0.0.0:5000/users/{USERNAME}/images
 ```
 
 Successful response:
