@@ -4,17 +4,20 @@ This backend-focused project stores images hosted in Cloudinary and uses JSON We
 You can make requests to the deployed server: http://54.80.94.139/
 
 ## Content
-Learning Process
-Tech Stack
-Routes Overview
-Routes Details
-## Learning Process
+* [Learning Process](#learn)
+* [Tech Stack](#stack)
+* [Routes Overview](#overview)
+* [Routes Details](#details)
+* [Run This Project Locally](#run)
+* [Running Tests](#tests)
+
+## <a name="learn"/>Learning Process
 - I began by creating a Flask app with the intention to implement a basic frontend using Jinja templates and vanilla JS/jQuery so that login and image uploading are simplified, but this is something I am already very comfortable doing.
 - Instead, I wondered about how to create an API that doesn't require a frontend where all requests can be done via Postman, for example. I realized I had no idea how to work without user forms in the browser.
 - After doing research, I read about HTTP Basic Auth and JSON Web Tokens (JWT), concepts unfamiliar to me, and this assignment grew into an opportunity to learn something new. 
 - After testing my routes using Postman, I became intrigued to try everything from the command line and learned how to use `cURL` to do so.
 
-## Tech Stack
+## <a name="stack"/>Tech Stack
 - Python
 - Flask
 - PostgreSQL
@@ -22,15 +25,15 @@ Routes Details
 - JSON Web Tokens
 - Cloudinary API
 
-## Routes Overview
+## <a name="overview"/>Routes Overview
 * [/users/register](#register)
 * [/users/login](#login)
 * [/users/{YOUR_USERNAME}/upload](#upload)
 * [/users/{USERNAME}/images](#get_user_images)
 
 
-## Routes Details
-
+## <a name="details"/>Routes Details
+Instructions below on how to make requests to the listed routes from the command line using `curl`.<br/>
 ### <a name="register"/>`/users/register`
 
 Making a request:
@@ -165,7 +168,7 @@ Successful response:
 }
 ```
 
-## Run This Project
+## <a name="run"/>Run This Project Locally
 - Clone this repository
 
 ```sh
@@ -213,7 +216,7 @@ $ python3 server.py
 Now you can make requests to your own server at: http://0.0.0.0:5000/
 
 
-## Running Tests
+## <a name="tests"/>Running Tests
 ```sh
 $ createdb testdb
 $ python3 tests.py
