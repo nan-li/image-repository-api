@@ -5,7 +5,7 @@ This backend-focused project stores images hosted in Cloudinary and uses JSON We
 - I began by creating a Flask app with the intention to implement a basic frontend using Jinja templates and vanilla JS/jQuery so that login and image uploading are simplified, but this is something I am already very comfortable doing.
 - Instead, I wondered about how to create an API that doesn't require a frontend where all requests can be done via Postman, for example. I realized I had no idea how to work without user forms in the browser.
 - After doing research, I read about HTTP Basic Auth and JSON Web Tokens (JWT), concepts unfamiliar to me, and this assignment grew into an opportunity to learn something new. 
-- After testing my routes using Postman, I became intrigued to try everything from the command line and learned how to use `curl` to do so.
+- After testing my routes using Postman, I became intrigued to try everything from the command line and learned how to use `cURL` to do so.
 
 ## Tech Stack
 - Python
@@ -18,8 +18,8 @@ This backend-focused project stores images hosted in Cloudinary and uses JSON We
 ## Routes Overview
 * [/users/register](#register)
 * [/users/login](#login)
-* [/users/<YOUR_USERNAME>/upload](#upload)
-* [/users/<USERNAME_HERE>/images](#get_user_images)
+* [/users/{YOUR_USERNAME}/upload](#upload)
+* [/users/{USERNAME}/images](#get_user_images)
 
 
 ## Routes Details
@@ -51,7 +51,10 @@ Successful response:
 Making a request:
 
 ```sh
-curl -d '{"username":"<YOUR_USERNAME>", "password":"<YOUR_PASSWORD>"}' -H 'Content-Type: application/json' http://0.0.0.0:5000/users/login
+curl \
+-d '{"username":"<YOUR_USERNAME>", "password":"<YOUR_PASSWORD>"}' \
+-H 'Content-Type: application/json' \
+http://0.0.0.0:5000/users/login
 ```
 
 Successful response:
@@ -70,13 +73,19 @@ The token returned from this route long and can be tedious to include in subsequ
 Making a request:
 
 ```sh
-curl -F "image=@<PATH/TO/IMAGE.PNG>" -H "Authorization: Bearer <YOUR_TOKEN>" http://0.0.0.0:5000/users/<YOUR_USERNAME>/upload
+curl \
+-F "image=@<PATH/TO/IMAGE.PNG>" \
+-H "Authorization: Bearer <YOUR_TOKEN>" \
+http://0.0.0.0:5000/users/<YOUR_USERNAME>/upload
 ```
 
 By default, the default permission on uploaded photos is set to PRIVATE. Set the permission of photo on upload to PUBLIC by adding `'-F permission=PUBLIC'`.
 
 ```sh
-curl -F "image=@<PATH/TO/IMAGE.PNG>" -F permission=PUBLIC -H "Authorization: Bearer <YOUR_TOKEN>"  http://0.0.0.0:5000/users/<YOUR_USERNAME>/upload
+curl \
+-F "image=@<PATH/TO/IMAGE.PNG>" \
+-F permission=PUBLIC -H "Authorization: Bearer <YOUR_TOKEN>"  \
+http://0.0.0.0:5000/users/<YOUR_USERNAME>/upload
 ```
 
 Successful response:
@@ -96,7 +105,9 @@ Get all images if you are requesting own images. Get public images of another us
 Making a request:
 
 ```sh
-curl -H "Authorization: Bearer <YOUR_TOKEN>" http://0.0.0.0:5000/users/<USERNAME>/images
+curl \
+-H "Authorization: Bearer <YOUR_TOKEN>" \
+http://0.0.0.0:5000/users/<USERNAME>/images
 ```
 
 Successful response:
