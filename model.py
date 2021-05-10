@@ -1,29 +1,18 @@
 """Models for Image Repository app."""
 
 from datetime import datetime
-from enum import Enum, auto
+from enum import Enum
 
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-class ImageStatus(Enum):
-    """Statuses that images can have."""
-    ACTIVE = auto()
-    IN_TRASH = auto()
-
 class ImagePermission(Enum):
     """Permissions that images can have."""
-    PRIVATE = auto()
-    FRIENDS_ONLY = auto()
-    PUBLIC = auto()
+    PRIVATE = "PRIVATE"
+    PUBLIC = "PUBLIC"
 
-class FriendStatus(Enum):
-    """Statuses that friends can have."""
-    REQUESTED = auto()
-    ACCEPTED = auto()
-    DENIED = auto()
 
 class User(db.Model):
     """A user."""
@@ -58,20 +47,6 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-class Friend(db.Model):
-    """A friendship relationship between two users."""
-    __tablename__ = 'friends'
-
-    id = db.Column(db.Integer,
-                autoincrement=True,
-                primary_key=True)
-    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    recipient_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    status = db.Column(db.Enum(FriendStatus), default='REQUESTED')
-
-    def __repr__(self):
-        return f'<Friend relationship from User {self.sender_id} to {self.recipient_id} | Status {self.status}>.'
-
 
 class Image(db.Model):
     """An image."""
@@ -80,14 +55,10 @@ class Image(db.Model):
     id = db.Column(db.Integer,
                     autoincrement=True,
                     primary_key=True)
-    title = db.Column(db.String)
-    url = db.Column(db.String)
+    image_url = db.Column(db.String)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     uploaded_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     permission = db.Column(db.Enum(ImagePermission), default='PRIVATE')
-    status = db.Column(db.Enum(ImageStatus), default='ACTIVE')
-    # trashed_at timestamp resets if trashed image is restored and re-trashed
-    trashed_at = db.Column(db.DateTime)
     # owner = user who uploaded this image
 
     def __repr__(self):
@@ -96,35 +67,15 @@ class Image(db.Model):
     def to_dict(self):
         data = {
             'id': self.id,
-            'title': self.title,
-            'url': self.url,
+            'image_url': self.image_url,
+            'permission': self.permission.value
         }
         return data
 
 
-def example_data():
-    """Create some sample data for testing."""
 
-    # In case this is run more than once, empty out existing data
-    User.query.delete()
-    Image.query.delete()
-    Friend.query.delete()
 
-    # Add sample users and images
-    user1 = User(username='user1', password_hash=generate_password_hash('test1'))
-    user2 = User(username='user2', password_hash=generate_password_hash('test2'))
 
-    user1image1 = Image(url='url/for/user1image1', owner=user1)
-    user2image1 = Image(url='url/for/user2image1', owner=user2)
-    user1image2_private = Image(url='url/for/user1image2_private', 
-                                owner=user1)
-
-    db.session.add_all([user1, 
-                        user2, 
-                        user1image1, 
-                        user2image1, 
-                        user1image2_private])
-    db.session.commit()
 
 def connect_to_db(flask_app, db_uri='postgresql:///images', echo=False):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
