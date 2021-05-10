@@ -35,6 +35,7 @@ You can make requests to the deployed server: http://54.80.94.139/
 ## <a name="details"/>Routes Details
 Instructions below on how to make requests to the listed routes from the command line using `curl`.<br/>
 ### <a name="register"/>`/users/register`
+Register a new user account by providing the desired username and password in JSON format.
 
 **Making a request:**
 
@@ -47,7 +48,7 @@ http://54.80.94.139/users/register
 
 **Example:**
 ```sh
-curl \
+$ curl \
 -d '{"username":"user1", "password":"test1"}' \
 -H 'Content-Type: application/json' \
 http://54.80.94.139/users/register
@@ -65,6 +66,7 @@ http://54.80.94.139/users/register
 ```
 
 ### <a name="login"/>`/users/login`
+Login to user account by supplying username and password in JSON format. The response returns a token that will be needed to make subsequent API calls to protected routes.
 
 **Making a request:**
 
@@ -84,10 +86,11 @@ http://54.80.94.139/users/login
 } 
 ```
 
-The token returned from this route long and can be tedious to include in subsequent requests.
+The token returned from this route long and can be tedious to include in subsequent requests. One suggestion is to store the token in the shell environment.
 
 
 ### <a name="upload"/>`/users/{YOUR_USERNAME}upload`
+Upload an image file by supplying the path to the file. Include your token in the request and supply your username in the route.
 
 **Making a request:**
 
@@ -128,7 +131,7 @@ http://54.80.94.139/users/{YOUR_USERNAME}/upload
 ```
 
 ### <a name="get_user_images"/>`/users/{USERNAME}/images`
-Get all images if you are requesting own images. Get public images of another user.
+Returns all images if you are requesting your own images. Returns only public images of another user.
 
 **Making a request:**
 
