@@ -71,8 +71,17 @@ Login to user account by supplying username and password in JSON format. The res
 **Making a request:**
 
 ```sh
-curl \
+$ curl \
 -d '{"username":"{YOUR_USERNAME}", "password":"{YOUR_PASSWORD}"}' \
+-H 'Content-Type: application/json' \
+http://54.80.94.139/users/login
+```
+
+**Example:**
+
+```sh
+$ curl \
+-d '{"username":"user1", "password":"test1"}' \
 -H 'Content-Type: application/json' \
 http://54.80.94.139/users/login
 ```
@@ -88,6 +97,14 @@ http://54.80.94.139/users/login
 
 The token returned from this route long and can be tedious to include in subsequent requests. One suggestion is to store the token in the shell environment.
 
+Save the token to shell environment:
+```sh
+$ export TOKEN="{COPY_THE_RETURNED_TOKEN}"
+```
+Verify the TOKEN variable with:
+```sh
+$ echo $TOKEN
+```
 
 ### <a name="upload"/>`/users/{YOUR_USERNAME}/upload`
 Upload an image file by supplying the path to the file. Include your token in the request and supply your username in the route.
@@ -95,7 +112,7 @@ Upload an image file by supplying the path to the file. Include your token in th
 **Making a request:**
 
 ```sh
-curl \
+$ curl \
 -F "image=@{PATH/TO/IMAGE.PNG}" \
 -H "Authorization: Bearer {YOUR_TOKEN}" \
 http://54.80.94.139/users/{YOUR_USERNAME}/upload
@@ -103,19 +120,28 @@ http://54.80.94.139/users/{YOUR_USERNAME}/upload
 
 **Example (uploading bear.png in the present directory):**
 
+Long way:
 ```sh
-curl \
+$ curl \
 -F "image=@./bear.png" \
--H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDYwODY0NCwianRpIjoiOTQ4ZTAzZjgtMGRlNC00ODhhLWE0MzYtZmQ5NGJhNjY5ZWU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNjIwNjA4NjQ0LCJleHAiOjE2MjA2MDk1NDR9.0lPlJGHwNk6MrEPpCvE5WZIGEmikJM0-l2PgxuqjDB8" \
+-H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDYwODY0NCwianRpIjoiOTQ4ZTAzZjgtMGRlNC00ODhhLWE0MzYtZmQ5NGJhNjY5ZWU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNjIwNjA4NjQ0LCJleHAijE2MjA2MDk1NDR9.0lPlJGHwNk6MrEPpCvE5WZIGEmikJM0-l2PgxuqjDB8" \
 http://54.80.94.139/users/user1/upload
+```
+Using $TOKEN env variable (double-quotes needed):
+```sh
+$ curl \
+-F "image=@./bear.png" \
+-H "Authorization: Bearer ${TOKEN}" \
+http://0.0.0.0:5000/users/user1/upload
 ```
 
 By default, the permission on uploaded photos is set to **PRIVATE**. Set the permission of photo on upload to **PUBLIC** by adding `'-F permission=PUBLIC'`.
 
 ```sh
-curl \
+$ curl \
 -F "image=@{PATH/TO/IMAGE.PNG}" \
--F permission=PUBLIC -H "Authorization: Bearer {YOUR_TOKEN}"  \
+-F permission=PUBLIC \
+-H "Authorization: Bearer {YOUR_TOKEN}"  \
 http://54.80.94.139/users/{YOUR_USERNAME}/upload
 ```
 
@@ -136,16 +162,23 @@ Returns all images if you are requesting your own images. Returns only public im
 **Making a request:**
 
 ```sh
-curl \
+$ curl \
 -H "Authorization: Bearer {YOUR_TOKEN}" \
 http://54.80.94.139/users/{USERNAME}/images
 ```
 
 **Example:**
 ```sh
-curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDYwODY0NCwianRpIjoiOTQ4ZTAzZjgtMGRlNC00ODhhLWE0MzYtZmQ5NGJhNjY5ZWU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNjIwNjA4NjQ0LCJleHAiOjE2MjA2MDk1NDR9.0lPlJGHwNk6MrEPpCvE5WZIGEmikJM0-l2PgxuqjDB8" \
+
+$ curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDYwODY0NCwianRpIjoiOTQ4ZTAzZjgtMGRlNC00ODhhLWE0MzYtZmQ5NGJhNjY5ZWU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNjIwNjA4NjQ0LCJleHAiOjE2jA2MDk1NDR9.0lPlJGHwNk6MrEPpCvE5WZIGEmikJM0-l2PgxuqjDB8" \
 http://54.80.94.139/users/user1/images
 ```
+
+```sh
+$ curl -H "Authorization: Bearer ${TOKEN}" \
+http://54.80.94.139/users/user1/images
+```
+
 **Successful response:**
 
 ```json
@@ -158,7 +191,7 @@ http://54.80.94.139/users/user1/images
     }, 
     {
       "id": 2, 
-      "image_url": "url/for/user1image2_private", 
+      "image_url": "url/for/user1image2_public", 
       "permission": "PUBLIC"
     }, 
     {
