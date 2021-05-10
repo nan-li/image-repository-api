@@ -132,7 +132,7 @@ Using $TOKEN env variable (double-quotes needed):
 $ curl \
 -F "image=@./bear.png" \
 -H "Authorization: Bearer ${TOKEN}" \
-http://0.0.0.0:5000/users/user1/upload
+http://54.80.94.139/users/user1/upload
 ```
 
 By default, the permission on uploaded photos is set to **PRIVATE**. Set the permission of photo on upload to **PUBLIC** by adding `'-F permission=PUBLIC'`.
