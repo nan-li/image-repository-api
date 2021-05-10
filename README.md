@@ -36,7 +36,7 @@ You can make requests to the deployed server: http://54.80.94.139/
 Instructions below on how to make requests to the listed routes from the command line using `curl`.<br/>
 ### <a name="register"/>`/users/register`
 
-Making a request:
+**Making a request:**
 
 ```sh
 $ curl \
@@ -45,7 +45,7 @@ $ curl \
 http://54.80.94.139/users/register
 ```
 
-Example:
+**Example:**
 ```sh
 curl \
 -d '{"username":"user1", "password":"test1"}' \
@@ -53,7 +53,7 @@ curl \
 http://54.80.94.139/users/register
 ```
 
-Successful response:
+**Successful response:**
 
 ```json
 {
@@ -66,7 +66,7 @@ Successful response:
 
 ### <a name="login"/>`/users/login`
 
-Making a request:
+**Making a request:**
 
 ```sh
 curl \
@@ -75,7 +75,7 @@ curl \
 http://54.80.94.139/users/login
 ```
 
-Successful response:
+**Successful response:**
 
 ```json
 {
@@ -88,7 +88,8 @@ The token returned from this route long and can be tedious to include in subsequ
 
 
 ### <a name="upload"/>`/users/{YOUR_USERNAME}upload`
-Making a request:
+
+**Making a request:**
 
 ```sh
 curl \
@@ -97,7 +98,7 @@ curl \
 http://54.80.94.139/users/{YOUR_USERNAME}/upload
 ```
 
-Example (uploading bear.png in the present directory):
+**Example (uploading bear.png in the present directory):**
 
 ```sh
 curl \
@@ -106,7 +107,7 @@ curl \
 http://54.80.94.139/users/user1/upload
 ```
 
-By default, the default permission on uploaded photos is set to PRIVATE. Set the permission of photo on upload to PUBLIC by adding `'-F permission=PUBLIC'`.
+By default, the permission on uploaded photos is set to **PRIVATE**. Set the permission of photo on upload to **PUBLIC** by adding `'-F permission=PUBLIC'`.
 
 ```sh
 curl \
@@ -115,7 +116,7 @@ curl \
 http://54.80.94.139/users/{YOUR_USERNAME}/upload
 ```
 
-Successful response:
+**Successful response:**
 
 ```json
 {
@@ -129,7 +130,7 @@ Successful response:
 ### <a name="get_user_images"/>`/users/{USERNAME}/images`
 Get all images if you are requesting own images. Get public images of another user.
 
-Making a request:
+**Making a request:**
 
 ```sh
 curl \
@@ -137,12 +138,12 @@ curl \
 http://54.80.94.139/users/{USERNAME}/images
 ```
 
-Example:
+**Example:**
 ```sh
 curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDYwODY0NCwianRpIjoiOTQ4ZTAzZjgtMGRlNC00ODhhLWE0MzYtZmQ5NGJhNjY5ZWU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNjIwNjA4NjQ0LCJleHAiOjE2MjA2MDk1NDR9.0lPlJGHwNk6MrEPpCvE5WZIGEmikJM0-l2PgxuqjDB8" \
 http://54.80.94.139/users/user1/images
 ```
-Successful response:
+**Successful response:**
 
 ```json
 {
