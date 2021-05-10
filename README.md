@@ -28,7 +28,7 @@ This backend-focused project stores images hosted in Cloudinary and uses JSON We
 
 Making a request:
 
-```
+```sh
 curl -d '{"username":"<YOUR_USERNAME>", "password":"<YOUR_PASSWORD>"}' -H 'Content-Type: application/json' http://0.0.0.0:5000/users/register
 ```
 
@@ -47,7 +47,7 @@ Successful response:
 
 Making a request:
 
-```
+```sh
 curl -d '{"username":"<YOUR_USERNAME>", "password":"<YOUR_PASSWORD>"}' -H 'Content-Type: application/json' http://0.0.0.0:5000/users/login
 ```
 
@@ -56,26 +56,26 @@ Successful response:
 ```json
 {
   "token": "<YOUR_TOKEN_HERE_AND_BE_SURE_TO_SAVE_IT>", 
-  "user_id": <YOUR_USER_ID>
+  "user_id": "<YOUR_USER_ID>"
 } 
 ```
 
 ### <a name="upload"/>`/users/<YOUR_USERNAME>/upload`
 Making a request:
 
-```
+```sh
 curl -F "image=@<PATH/TO/IMAGE.PNG>" -H "Authorization: Bearer <YOUR_TOKEN>" http://0.0.0.0:5000/users/<YOUR_USERNAME>/upload
 ```
 
 By default, the default permission on uploaded photos is set to PRIVATE. Set the permission of photo on upload to PUBLIC by adding `'-F permission=PUBLIC'`.
 
-```
+```sh
 curl -F "image=@<PATH/TO/IMAGE.PNG>" -F permission=PUBLIC -H "Authorization: Bearer <YOUR_TOKEN>"  http://0.0.0.0:5000/users/<YOUR_USERNAME>/upload
 ```
 
 Successful response:
 
-```
+```json
 {
   "image_url": "<HTTP_URL_FOR_IMAGE>", 
   "message": "Image successfully uploaded.", 
@@ -89,13 +89,13 @@ Get all images if you are requesting own images. Get public images of another us
 
 Making a request:
 
-```
+```sh
 curl -H "Authorization: Bearer <YOUR_TOKEN>" http://0.0.0.0:5000/users/<USERNAME>/images
 ```
 
 Successful response:
 
-```
+```json
 {
   "images": [
     {
@@ -122,27 +122,27 @@ Successful response:
 ## Run This Project
 - Clone this repository
 
-```
+```sh
 $ git clone https://github.com/nan-li/image-repository-api.git
 ```
 
 - Create and activate a virtual environment in the directory
 
-```
+```sh
 $ virtualenv env  
 $ source env/bin/activate
 ```
 
 - Install dependencies
 
-```
+```sh
 $ pip3 install -r requirements.txt
 ```
 
 - Sign up for a Cloudinary account
 - Create `secrets.sh` in the directory with the following:
 
-```
+```sh
 export CLOUDINARY_CLOUD_NAME="YOUR_CLOUD_NAME"
 export CLOUDINARY_API_KEY="YOUR_API_KEY"
 export CLOUDINARY_API_SECRET="YOUR_API_SECRET"
@@ -150,22 +150,22 @@ export JWT_SECRET_KEY="YOUR_JWT_KEY"
 ```
 
 - Load these variables into the shell
-```
+```sh
 $ source secrets.sh
 ```
 
 - Create and seed the database
-```
+```sh
 $ python3 seed.py
 ```
 
 - Run the server
-```
+```sh
 $ python3 server.py
 ```
 
 ## Running Tests
-```
+```sh
 $ createdb testdb
 $ python3 tests.py
 ```
