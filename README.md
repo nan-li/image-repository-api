@@ -181,6 +181,9 @@ $ python3 seed.py
 $ python3 server.py
 ```
 
+Now you can make requests to: http://0.0.0.0:5000/
+
+
 ## Running Tests
 ```sh
 $ createdb testdb
