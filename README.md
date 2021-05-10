@@ -29,7 +29,10 @@ This backend-focused project stores images hosted in Cloudinary and uses JSON We
 Making a request:
 
 ```sh
-curl -d '{"username":"<YOUR_USERNAME>", "password":"<YOUR_PASSWORD>"}' -H 'Content-Type: application/json' http://0.0.0.0:5000/users/register
+curl \
+-d '{"username":"<YOUR_USERNAME>", "password":"<YOUR_PASSWORD>"}' \
+-H 'Content-Type: application/json' \
+http://0.0.0.0:5000/users/register
 ```
 
 Successful response:
@@ -59,6 +62,9 @@ Successful response:
   "user_id": "<YOUR_USER_ID>"
 } 
 ```
+
+The token returned from this route long and can be tedious to include in subsequent requests.
+
 
 ### <a name="upload"/>`/users/<YOUR_USERNAME>/upload`
 Making a request:
@@ -110,7 +116,7 @@ Successful response:
     }, 
     {
       "id": 4, 
-      "image_url": "http://res.cloudinary.com/dfzb7jmnb/image/upload/v1620607893/f1eojamkyrjfygzwvqp7.png", 
+      "image_url": "url/for/img", 
       "permission": "PUBLIC"
     }
   ], 
