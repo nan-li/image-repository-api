@@ -95,7 +95,7 @@ http://54.80.94.139/users/login
 } 
 ```
 
-The token returned from this route long and can be tedious to include in subsequent requests. One suggestion is to store the token in the shell environment.
+The token returned from this route is long and can be tedious to include in subsequent requests. One suggestion is to store the token in the shell environment.
 
 Save the token to shell environment:
 ```sh
