@@ -1,4 +1,4 @@
-# Image Repository API 🖥
+# Image Repository API 
 This backend-focused project stores images hosted in Cloudinary and uses JSON Web Tokens for authorization.
 
 ## Learning Process
