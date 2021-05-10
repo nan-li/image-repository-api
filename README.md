@@ -3,6 +3,11 @@ This backend-focused project stores images hosted in Cloudinary and uses JSON We
 <br/><br/>
 You can make requests to the deployed server: http://54.80.94.139/
 
+## Content
+Learning Process
+Tech Stack
+Routes Overview
+Routes Details
 ## Learning Process
 - I began by creating a Flask app with the intention to implement a basic frontend using Jinja templates and vanilla JS/jQuery so that login and image uploading are simplified, but this is something I am already very comfortable doing.
 - Instead, I wondered about how to create an API that doesn't require a frontend where all requests can be done via Postman, for example. I realized I had no idea how to work without user forms in the browser.
@@ -119,4 +124,97 @@ Successful response:
 ```
 
 ### <a name="get_user_images"/>`/users/{USERNAME}/images`
-Get all images if you are 
+Get all images if you are requesting own images. Get public images of another user.
+
+Making a request:
+
+```sh
+curl \
+-H "Authorization: Bearer {YOUR_TOKEN}" \
+http://54.80.94.139/users/{USERNAME}/images
+```
+
+Example:
+```sh
+curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDYwODY0NCwianRpIjoiOTQ4ZTAzZjgtMGRlNC00ODhhLWE0MzYtZmQ5NGJhNjY5ZWU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNjIwNjA4NjQ0LCJleHAiOjE2MjA2MDk1NDR9.0lPlJGHwNk6MrEPpCvE5WZIGEmikJM0-l2PgxuqjDB8" \
+http://54.80.94.139/users/user1/images
+```
+Successful response:
+
+```json
+{
+  "images": [
+    {
+      "id": 1, 
+      "image_url": "url/for/user1image1", 
+      "permission": "PRIVATE"
+    }, 
+    {
+      "id": 2, 
+      "image_url": "url/for/user1image2_private", 
+      "permission": "PUBLIC"
+    }, 
+    {
+      "id": 4, 
+      "image_url": "url/for/img", 
+      "permission": "PUBLIC"
+    }
+  ], 
+  "status": "success", 
+  "total": 3
+}
+```
+
+## Run This Project
+- Clone this repository
+
+```sh
+$ git clone https://github.com/nan-li/image-repository-api.git
+```
+
+- Create and activate a virtual environment in the directory
+
+```sh
+$ virtualenv env  
+$ source env/bin/activate
+```
+
+- Install dependencies
+
+```sh
+$ pip3 install -r requirements.txt
+```
+
+- Sign up for a Cloudinary account
+- Create `secrets.sh` in the directory with the following:
+
+```sh
+export CLOUDINARY_CLOUD_NAME="YOUR_CLOUD_NAME"
+export CLOUDINARY_API_KEY="YOUR_API_KEY"
+export CLOUDINARY_API_SECRET="YOUR_API_SECRET"
+export JWT_SECRET_KEY="YOUR_JWT_KEY"
+```
+
+- Load these variables into the shell
+```sh
+$ source secrets.sh
+```
+
+- Create and seed the database
+```sh
+$ python3 seed.py
+```
+
+- Run the server
+```sh
+$ python3 server.py
+```
+
+Now you can make requests to your own server at: http://0.0.0.0:5000/
+
+
+## Running Tests
+```sh
+$ createdb testdb
+$ python3 tests.py
+```
