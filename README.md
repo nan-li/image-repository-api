@@ -1,5 +1,7 @@
 # Image Repository API 
 This backend-focused project stores images hosted in Cloudinary and uses JSON Web Tokens for authorization.
+<br/><br/>
+You can make requests to http://54.80.94.139/
 
 ## Learning Process
 - I began by creating a Flask app with the intention to implement a basic frontend using Jinja templates and vanilla JS/jQuery so that login and image uploading are simplified, but this is something I am already very comfortable doing.
@@ -32,7 +34,15 @@ Making a request:
 curl \
 -d '{"username":"{YOUR_USERNAME}", "password":"{YOUR_PASSWORD}"}' \
 -H 'Content-Type: application/json' \
-http://0.0.0.0:5000/users/register
+http://54.80.94.139/users/register
+```
+
+Example:
+```sh
+curl \
+-d '{"username":"user1", "password":"test1"}' \
+-H 'Content-Type: application/json' \
+http://54.80.94.139/users/register
 ```
 
 Successful response:
@@ -54,7 +64,7 @@ Making a request:
 curl \
 -d '{"username":"{YOUR_USERNAME}", "password":"{YOUR_PASSWORD}"}' \
 -H 'Content-Type: application/json' \
-http://0.0.0.0:5000/users/login
+http://54.80.94.139/users/login
 ```
 
 Successful response:
@@ -76,7 +86,16 @@ Making a request:
 curl \
 -F "image=@{PATH/TO/IMAGE.PNG}" \
 -H "Authorization: Bearer {YOUR_TOKEN}" \
-http://0.0.0.0:5000/users/{YOUR_USERNAME}/upload
+http://54.80.94.139/users/{YOUR_USERNAME}/upload
+```
+
+Example (uploading bear.png in the present directory):
+
+```sh
+curl \
+-F "image=@./bear.png" \
+-H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDYwODY0NCwianRpIjoiOTQ4ZTAzZjgtMGRlNC00ODhhLWE0MzYtZmQ5NGJhNjY5ZWU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNjIwNjA4NjQ0LCJleHAiOjE2MjA2MDk1NDR9.0lPlJGHwNk6MrEPpCvE5WZIGEmikJM0-l2PgxuqjDB8" \
+http://54.80.94.139/users/user1/upload
 ```
 
 By default, the default permission on uploaded photos is set to PRIVATE. Set the permission of photo on upload to PUBLIC by adding `'-F permission=PUBLIC'`.
@@ -85,7 +104,7 @@ By default, the default permission on uploaded photos is set to PRIVATE. Set the
 curl \
 -F "image=@{PATH/TO/IMAGE.PNG}" \
 -F permission=PUBLIC -H "Authorization: Bearer {YOUR_TOKEN}"  \
-http://0.0.0.0:5000/users/{YOUR_USERNAME}/upload
+http://54.80.94.139/users/{YOUR_USERNAME}/upload
 ```
 
 Successful response:
@@ -107,9 +126,14 @@ Making a request:
 ```sh
 curl \
 -H "Authorization: Bearer {YOUR_TOKEN}" \
-http://0.0.0.0:5000/users/{USERNAME}/images
+http://54.80.94.139/users/{USERNAME}/images
 ```
 
+Example:
+```sh
+curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDYwODY0NCwianRpIjoiOTQ4ZTAzZjgtMGRlNC00ODhhLWE0MzYtZmQ5NGJhNjY5ZWU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNjIwNjA4NjQ0LCJleHAiOjE2MjA2MDk1NDR9.0lPlJGHwNk6MrEPpCvE5WZIGEmikJM0-l2PgxuqjDB8" \
+http://54.80.94.139/users/user1/images
+```
 Successful response:
 
 ```json
@@ -181,7 +205,7 @@ $ python3 seed.py
 $ python3 server.py
 ```
 
-Now you can make requests to: http://0.0.0.0:5000/
+Now you can make requests to your own server at: http://0.0.0.0:5000/
 
 
 ## Running Tests
